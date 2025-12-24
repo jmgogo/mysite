@@ -5,8 +5,8 @@
 @font-face {
   font-family: "Compagnon";
   src:
-    url("/fonts/Compagnon-Roman.woff2") format("woff2"),
-    url("/fonts/Compagnon-Roman.woff") format("woff");
+    url("/fonts/Compagnon/Compagnon-Roman.woff2") format("woff2"),
+    url("/fonts/Compagnon/Compagnon-Roman.woff") format("woff");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -15,8 +15,8 @@
 @font-face {
   font-family: "Compagnon";
   src:
-    url("/fonts/Compagnon-Italic.woff2") format("woff2"),
-    url("/fonts/Compagnon-Italic.woff") format("woff");
+    url("/fonts/Compagnon/Compagnon-Italic.woff2") format("woff2"),
+    url("/fonts/Compagnon/Compagnon-Italic.woff") format("woff");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -25,8 +25,8 @@
 @font-face {
   font-family: "Compagnon";
   src:
-    url("/fonts/Compagnon-Light.woff2") format("woff2"),
-    url("/fonts/Compagnon-Light.woff") format("woff");
+    url("/fonts/Compagnon/Compagnon-Light.woff2") format("woff2"),
+    url("/fonts/Compagnon/Compagnon-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -35,8 +35,8 @@
 @font-face {
   font-family: "Compagnon";
   src:
-    url("/fonts/Compagnon-Bold.woff2") format("woff2"),
-    url("/fonts/Compagnon-Bold.woff") format("woff");
+    url("/fonts/Compagnon/Compagnon-Bold.woff2") format("woff2"),
+    url("/fonts/Compagnon/Compagnon-Bold.woff") format("woff");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -45,8 +45,8 @@
 @font-face {
   font-family: "Compagnon";
   src:
-    url("/fonts/Compagnon-Medium.woff2") format("woff2"),
-    url("/fonts/Compagnon-Medium.woff") format("woff");
+    url("/fonts/Compagnon/Compagnon-Medium.woff2") format("woff2"),
+    url("/fonts/Compagnon/Compagnon-Medium.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -85,9 +85,7 @@
   --sidebar-accent-foreground: oklch(0.3211 0 0);
   --sidebar-border: oklch(0.8699 0 0);
   --sidebar-ring: oklch(0.7978 0.2046 153.0604);
-  --font-sans: Compagnon, Fira Sans, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: STIX Two Text, ui-serif, serif;
-  --font-mono: Fira Code, ui-monospace, monospace;
+  --font-compagnon: Compagnon, ui-serif, serif;
   --radius: 0.25rem;
   --shadow-x: 4px;
   --shadow-y: 4px;
@@ -115,6 +113,9 @@
   --shadow-2xl: 4px 4px 0px 0px hsl(171.0638 51.6484% 17.8431% / 2.5);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+
+  /* Set Compagnon as global font */
+  font-family: var(--font-compagnon);
 }
 
 .dark {
@@ -150,9 +151,7 @@
   --sidebar-accent-foreground: oklch(0 0 0);
   --sidebar-border: oklch(0.3867 0 0);
   --sidebar-ring: oklch(0.7978 0.2046 153.0604);
-  --font-sans: Compagnon, Fira Sans, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: STIX Two Text, ui-serif, serif;
-  --font-mono: Fira Code, ui-monospace, monospace;
+  --font-compagnon: Compagnon, ui-serif, serif;
   --radius: 0.25rem;
   --shadow-x: 4px;
   --shadow-y: 4px;
@@ -208,9 +207,10 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
+  /* Override tailwind default font namespace, i.e. font-sans, font-mono, font-serif */
+  --font-*: initial;
+  /* Add custom font namespace */
+  --font-compagnon: var(--font-compagnon);
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
