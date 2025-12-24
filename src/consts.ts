@@ -3,4 +3,4 @@
 
 export const USERNAME = "jmgogo";
 export const SITE_TITLE = "Jose's Blog";
-export const SITE_DESCRIPTION = "A place to share my thoughts and ideas."
+export const SITE_DESCRIPTION = "A place to share my thoughts and ideas.";
