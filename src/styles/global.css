@@ -234,9 +234,6 @@
   body {
     letter-spacing: var(--tracking-normal);
 
-    /* Add accessible line-height */
-    /* line-height: 1.5; */
-
     /* Improve text rendering on macOS browsers */
     -webkit-font-smoothing: antialiased;
   }
