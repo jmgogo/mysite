@@ -7,9 +7,9 @@ import { Image } from "astro:assets";
 
 <header>
   <nav class="container mx-auto">
-    <a href="/">
-      <Image src={logo} alt="site logo" width="48" height="48" />
-      <h2>{USERNAME}</h2>
+    <a href="/" class="flex gap-1.5 items-center">
+      <Image src={logo} alt="site logo" class="size-10" />
+      <h1 class="font-bold text-3xl leading-0">{USERNAME}</h1>
     </a>
     <div class="internal-links">
       <HeaderLink href="/">Home</HeaderLink>
