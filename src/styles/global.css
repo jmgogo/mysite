@@ -212,6 +212,9 @@
   /* Add custom font namespace */
   --font-compagnon: var(--font-compagnon);
 
+  /* Remove 2xl default breakpoint for tailwind */
+  --breakpoint-2xl: initial;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
