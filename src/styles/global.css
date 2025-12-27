@@ -231,7 +231,13 @@
 }
 
 @layer base {
+  html {
+    /* Prevent layout shift when adding/removing scrollbars */
+    scrollbar-gutter: stable;
+  }
+
   body {
+    /* Set default text properties */
     letter-spacing: var(--tracking-normal);
 
     /* Improve text rendering on macOS browsers */
