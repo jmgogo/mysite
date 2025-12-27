@@ -234,6 +234,8 @@
   html {
     /* Prevent layout shift when adding/removing scrollbars */
     scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-foreground) var(--color-background);
   }
 
   body {
