@@ -3,9 +3,9 @@ import { USERNAME } from "../consts";
 import HeaderLink from "./HeaderLink.astro";
 import logo from "../assets/logo.png";
 import { Image } from "astro:assets";
-import Sun from '@lucide/astro/icons/sun';
-import GitHub from '@lucide/astro/icons/github';
-import RSS from '@lucide/astro/icons/rss';
+import GitHub from "@lucide/astro/icons/github";
+import RSS from "@lucide/astro/icons/rss";
+import ThemeIcon from "./ThemeIcon.astro";
 ---
 
 <header>
@@ -20,9 +20,9 @@ import RSS from '@lucide/astro/icons/rss';
       <HeaderLink href="/resume"><h1>Resume</h1></HeaderLink>
     </div>
     <div class="flex gap-3">
-      <a href=""><Sun class="size-8" />
-      <span class="sr-only">Toggle light/dark mode</span>
-      </a>
+      <ThemeIcon>
+        <span class="sr-only">Toggle light/dark mode</span>
+      </ThemeIcon>
       <a href="https://github.com/jmgogo" target="_blank">
         <span class="sr-only">Checkout my GitHub profile</span>
         <GitHub class="size-8" />
@@ -34,4 +34,3 @@ import RSS from '@lucide/astro/icons/rss';
     </div>
   </nav>
 </header>
-
