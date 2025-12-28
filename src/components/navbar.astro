@@ -4,22 +4,25 @@ import { Image } from "astro:assets";
 import logo from "../assets/logo.png";
 import GitHub from "@lucide/astro/icons/github";
 import RSS from "@lucide/astro/icons/rss";
+import Menu from "@lucide/astro/icons/menu";
 import NavLink from "./nav-link.astro";
 import ThemeToggle from "./theme-toggle.astro";
 ---
 
-<header class="sticky top-0 z-50">
+<header class="sticky top-0 z-50 px-2">
   <nav
     class="bg-card text-card-foreground ring-muted container mx-auto mt-4 flex items-center justify-between rounded-lg p-4 ring-1"
   >
     <a href="/" class="flex items-center gap-1.5">
       <Image src={logo} alt="site logo" class="size-10" />
-      <h1 class="text-3xl leading-0 font-bold">{USERNAME}</h1>
+      <h1 class="hidden text-3xl font-bold md:block lg:text-4xl">{USERNAME}</h1>
     </a>
-    <div class="space-x-6">
-      <NavLink href="/blog"><h1>Blog</h1></NavLink>
-      <NavLink href="/contact"><h1>Contact</h1></NavLink>
-      <NavLink href="/resume"><h1>Resume</h1></NavLink>
+    <div
+      class="align-center hidden gap-8 text-2xl font-bold italic md:flex lg:text-3xl"
+    >
+      <NavLink href="/blog">Blog</NavLink>
+      <NavLink href="/contact">Contact</NavLink>
+      <NavLink href="/resume">Resume</NavLink>
     </div>
     <div class="flex gap-3">
       <ThemeToggle>
@@ -33,6 +36,12 @@ import ThemeToggle from "./theme-toggle.astro";
         <span class="sr-only">Subscribe to my RSS Feed</span>
         <RSS class="size-8" />
       </a>
+    </div>
+    <div class="md:hidden">
+      <button aria-label="Toggle mobile menu">
+        <Menu class="size-8" />
+      </button>
+      <span class="sr-only">Toggle mobile menu</span>
     </div>
   </nav>
 </header>
