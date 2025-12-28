@@ -1,20 +1,18 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
+import Head from "../components/head.astro";
+import Footer from "../components/footer.astro";
+import Navbar from "../components/navbar.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
+  <Head title={SITE_TITLE} description={SITE_DESCRIPTION} />
   <body class="bg-background text-foreground">
-    <Header />
+    <Navbar />
     <main class="container mx-auto my-8">
       <slot />
-      <Footer />
     </main>
+    <Footer />
   </body>
 </html>

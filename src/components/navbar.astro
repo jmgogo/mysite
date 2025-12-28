@@ -1,11 +1,11 @@
 ---
 import { USERNAME } from "../consts";
-import HeaderLink from "./HeaderLink.astro";
-import logo from "../assets/logo.png";
 import { Image } from "astro:assets";
+import logo from "../assets/logo.png";
 import GitHub from "@lucide/astro/icons/github";
 import RSS from "@lucide/astro/icons/rss";
-import ThemeIcon from "./ThemeIcon.astro";
+import NavLink from "./nav-link.astro";
+import ThemeToggle from "./theme-toggle.astro";
 ---
 
 <header>
@@ -15,14 +15,14 @@ import ThemeIcon from "./ThemeIcon.astro";
       <h1 class="text-3xl leading-0 font-bold">{USERNAME}</h1>
     </a>
     <div class="space-x-6">
-      <HeaderLink href="/blog"><h1>Blog</h1></HeaderLink>
-      <HeaderLink href="/contact"><h1>Contact</h1></HeaderLink>
-      <HeaderLink href="/resume"><h1>Resume</h1></HeaderLink>
+      <NavLink href="/blog"><h1>Blog</h1></NavLink>
+      <NavLink href="/contact"><h1>Contact</h1></NavLink>
+      <NavLink href="/resume"><h1>Resume</h1></NavLink>
     </div>
     <div class="flex gap-3">
-      <ThemeIcon>
+      <ThemeToggle>
         <span class="sr-only">Toggle light/dark mode</span>
-      </ThemeIcon>
+      </ThemeToggle>
       <a href="https://github.com/jmgogo" target="_blank">
         <span class="sr-only">Checkout my GitHub profile</span>
         <GitHub class="size-8" />
