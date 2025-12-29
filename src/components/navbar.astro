@@ -4,12 +4,11 @@ import { Image } from "astro:assets";
 import logo from "../assets/logo.png";
 import GitHub from "@lucide/astro/icons/github";
 import RSS from "@lucide/astro/icons/rss";
-import Menu from "@lucide/astro/icons/menu";
 import NavLink from "./nav-link.astro";
 import ThemeToggle from "./theme-toggle.astro";
 ---
 
-<header class="sticky top-0 z-50 px-2">
+<header class="sticky top-0 px-2">
   <nav
     class="bg-card text-card-foreground ring-muted container mx-auto mt-4 flex items-center justify-between rounded-lg p-4 ring-1"
   >
@@ -38,10 +37,113 @@ import ThemeToggle from "./theme-toggle.astro";
       </a>
     </div>
     <div class="md:hidden">
-      <button aria-label="Toggle mobile menu">
-        <Menu class="size-8" />
-      </button>
+      <div id="ham-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       <span class="sr-only">Toggle mobile menu</span>
     </div>
   </nav>
+  <div id="off-screen-menu" class="md:hidden">
+    <NavLink href="/blog">Blog</NavLink>
+    <NavLink href="/contact">Contact</NavLink>
+    <NavLink href="/resume">Resume</NavLink>
+  </div>
 </header>
+
+<script>
+  // get elements
+  const hamMenu = document.querySelector("#ham-menu");
+  const offScreenMenu = document.querySelector("#off-screen-menu");
+
+  try {
+    // handle case where elements are not found
+    if (!hamMenu || !offScreenMenu) {
+      throw new Error("Could not find ham menu or off screen menu");
+    }
+
+    // close off-screen menu on resize past md breakpoint
+    window.onresize = () => {
+      if (window.innerWidth >= 768) {
+        offScreenMenu.classList.remove("active");
+        hamMenu.classList.remove("active");
+      }
+    };
+
+    // toggle off-screen menu
+    hamMenu.addEventListener("click", () => {
+      hamMenu.classList.toggle("active");
+      offScreenMenu.classList.toggle("active");
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error initializing navbar: ", error.message);
+    }
+  }
+</script>
+
+<style>
+  /* off-screen-menu */
+  #off-screen-menu {
+    background-color: var(--color-muted);
+    height: 100vh;
+    width: 100%;
+    max-width: 450px;
+    position: fixed;
+    top: 0;
+    right: -450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: start;
+    font-size: 3rem;
+    transition: 0.3s ease;
+    font-style: italic;
+  }
+  #off-screen-menu.active {
+    right: 0;
+  }
+
+  /* ham menu */
+  #ham-menu {
+    height: 40px;
+    width: 32px;
+    margin-left: auto;
+    position: relative;
+  }
+
+  #ham-menu span {
+    height: 3px;
+    width: 100%;
+    background-color: var(--secondary);
+    border-radius: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.3s ease;
+    z-index: 10;
+  }
+  #ham-menu span:nth-child(1) {
+    top: 25%;
+  }
+  #ham-menu span:nth-child(3) {
+    top: 75%;
+  }
+  #ham-menu.active span {
+    background-color: var(--color-secondary);
+  }
+  #ham-menu.active span:nth-child(1) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  #ham-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+  #ham-menu.active span:nth-child(3) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+</style>
