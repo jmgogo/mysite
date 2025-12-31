@@ -8,12 +8,16 @@ const blog = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      description: z.string(),
-      // Transform string to Date object
+      description: z.string(), // synopsis of the post
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
-      heroImage: image().optional(),
+      coverImage: image().optional(),
+      coverImageAlt: z.string().optional(),
     }),
 });
+
+// TODO get type safety for wordCount and reading time
+// wordCount: z.coerce.number(), // number of words
+// readingTime: z.string(), // e.g. 3 min read
 
 export const collections = { blog };

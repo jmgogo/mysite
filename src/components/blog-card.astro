@@ -1,0 +1,52 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "./formatted-date.astro";
+
+
+interface Props {
+  postId: string;
+  title: string;
+  description: string;
+  readingTime: string;
+  wordCount: number;
+  pubDate: Date;
+  updatedDate?: Date
+  coverImage?:  {
+    src: string;
+    width: number;
+    height: number;
+    format: 
+        'png' |
+        'jpg' |
+        'jpeg' |
+        'tiff' |
+        'webp' |
+        'gif' |
+        'svg' |
+        'avif'
+    };
+  coverImageAlt: string;
+}
+
+const { postId,title, description, readingTime, wordCount, pubDate, updatedDate, coverImage, coverImageAlt} = Astro.props
+
+---
+
+<a href={`/blog/${postId}/`}>
+    <!-- Image -->
+    { coverImage && <Image alt={coverImageAlt} src={coverImage?.src} width={coverImage.width} height={coverImage.height}/> }
+    <!-- Card Header -->
+    <h1 class="font-bold">
+        {title}
+    </h1>
+    <FormattedDate  date={updatedDate ?? pubDate}/>
+    <p>
+        {description}
+    </p>
+    <!-- card footer -->
+     <div>
+        <span class="text-muted-foreground">{wordCount} words</span>
+        &middot
+        <span class="text-muted-foreground">{readingTime}</span>
+     </div>
+</a>

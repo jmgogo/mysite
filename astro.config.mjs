@@ -3,13 +3,16 @@
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
+import { remarkReadingTime } from "./remark-reading-time.mjs";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://example.com",
   integrations: [mdx(), sitemap()],
-
+  markdown: {
+    remarkPlugins: [remarkReadingTime],
+  },
   vite: {
     plugins: [tailwindcss()],
   },
