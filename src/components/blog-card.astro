@@ -1,8 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import FormattedDate from "./formatted-date.astro";
-
-
 interface Props {
   postId: string;
   title: string;
@@ -10,43 +6,58 @@ interface Props {
   readingTime: string;
   wordCount: number;
   pubDate: Date;
-  updatedDate?: Date
-  coverImage?:  {
-    src: string;
-    width: number;
-    height: number;
-    format: 
-        'png' |
-        'jpg' |
-        'jpeg' |
-        'tiff' |
-        'webp' |
-        'gif' |
-        'svg' |
-        'avif'
-    };
-  coverImageAlt: string;
+  updatedDate?: Date;
 }
 
-const { postId,title, description, readingTime, wordCount, pubDate, updatedDate, coverImage, coverImageAlt} = Astro.props
-
+const {
+  postId,
+  title,
+  description,
+  readingTime,
+  wordCount,
+  pubDate,
+  updatedDate,
+} = Astro.props;
 ---
 
-<a href={`/blog/${postId}/`}>
-    <!-- Image -->
-    { coverImage && <Image alt={coverImageAlt} src={coverImage?.src} width={coverImage.width} height={coverImage.height}/> }
-    <!-- Card Header -->
-    <h1 class="font-bold">
-        {title}
-    </h1>
-    <FormattedDate  date={updatedDate ?? pubDate}/>
-    <p>
+<!-- Card -->
+<div class="ring-muted @container/card min-h-52 max-w-sm ring">
+  <a
+    href={`/blog/${postId}/`}
+    class="bg-card text-card-foreground flex h-full w-full min-w-60 flex-col justify-between gap-6 p-4 @2xs/card:p-6"
+  >
+    <div class="flex flex-col items-stretch gap-4">
+      <!-- Card Header -->
+      <!-- TODO: Fix alignment on text-wrapped header and date  -->
+      <div
+        class="flex flex-col gap-2 @2xs/card:flex-row @2xs/card:justify-between @2xs/card:gap-6"
+      >
+        <h1 class="align-top leading-none font-bold">
+          {title}
+        </h1>
+        <time
+          datetime={(updatedDate ?? pubDate).toISOString()}
+          class="text-muted-foreground h-lh text-sm text-nowrap"
+        >
+          {
+            (updatedDate ?? pubDate).toLocaleDateString("en-us", {
+              month: "short",
+              day: "numeric",
+            })
+          }
+        </time>
+      </div>
+      <!-- Card Body-->
+      <p class="relative text-sm">
+        <!-- TODO: add height and bottom mask-b-from-5% bg-card -->
         {description}
-    </p>
-    <!-- card footer -->
-     <div>
-        <span class="text-muted-foreground">{wordCount} words</span>
-        &middot
-        <span class="text-muted-foreground">{readingTime}</span>
-     </div>
-</a>
+      </p>
+    </div>
+    <!-- Card Footer -->
+    <div class="text-muted-foreground text-sm">
+      <span>{wordCount} words</span>
+      &middot
+      <span>{readingTime}</span>
+    </div>
+  </a>
+</div>

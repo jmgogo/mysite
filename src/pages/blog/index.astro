@@ -6,21 +6,28 @@ import BlogCard from "@/components/blog-card.astro";
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-
 ---
 
 <Layout>
-  <div class="grid md:grid-cols-[3fr_minmax(275px,1fr)] gap-8">
-    <aside class="md:order-last">
-      TODO: add tags
-    </aside>
-    <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {
-        posts.map((post) => (
-          <BlogCard postId={post.id} readingTime={post.rendered?.metadata?.frontmatter?.readingTime } wordCount={post.rendered?.metadata?.frontmatter?.wordCount} {...post.data}/>
-          
-        ))
-      }
-    </section>
+  <div class="@container/blog-posts">
+    <div
+      class="grid gap-4 @3xl/blog-posts:grid-cols-[3fr_minmax(225px,1fr)] @3xl/blog-posts:gap-8"
+    >
+      <aside class="@3xl/blog-posts:order-last">TODO: add tags</aside>
+      <section
+        class="grid items-stretch gap-4 @lg/blog-posts:grid-cols-2 @lg/blog-posts:gap-px @5xl/blog-posts:grid-cols-3"
+      >
+        {
+          posts.map((post) => (
+            <BlogCard
+              postId={post.id}
+              readingTime={post.rendered?.metadata?.frontmatter?.readingTime}
+              wordCount={post.rendered?.metadata?.frontmatter?.wordCount}
+              {...post.data}
+            />
+          ))
+        }
+      </section>
+    </div>
   </div>
 </Layout>
