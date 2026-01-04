@@ -3,15 +3,31 @@ import Layout from "../layouts/default.astro";
 ---
 
 <Layout>
-  <h1>Hi, Friend!</h1>
-  <p>My name is <span id="name">Jose</span>.</p>
+  <div
+    class="@container/hero relative grid h-full min-h-[calc(100vh-var(--navbar-height)-var(--navbar-margin-top))] place-items-center"
+  >
+    <div
+      class="flex flex-col items-center gap-4 text-center md:gap-6 lg:gap-12"
+    >
+      <h1
+        class="flex grow flex-wrap items-center text-4xl font-bold italic @sm/hero:text-6xl @lg/hero:text-7xl @2xl/hero:text-8xl @3xl/hero:text-9xl @4xl/hero:text-[10rem]"
+      >
+        <span>jose</span>
+        <span class="text-secondary">gomez</span>
+      </h1>
+      <div
+        class="text-secondary text-xs font-normal tracking-wide @sm/hero:text-base @lg/hero:text-lg @2xl/hero:text-xl @4xl/hero:text-2xl"
+      >
+        <p>
+          <span class="text-nowrap">{"< Full Stack "}</span>
+          <span class="text-nowrap">{"Software Engineer />"}</span>
+        </p>
+        <p
+          class="text-foreground text-xs italic @sm/hero:text-base @lg/hero:text-lg @2xl/hero:text-xl @4xl/hero:text-2xl"
+        >
+          Welcome to my little corner of the internet.
+        </p>
+      </div>
+    </div>
+  </div>
 </Layout>
-
-<style>
-  #name {
-    font-weight: bold;
-    font-style: italic;
-    color: #3498db;
-    font-size: x-large;
-  }
-</style>
