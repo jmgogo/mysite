@@ -8,9 +8,9 @@ import NavLink from "./nav-link.astro";
 import ThemeToggle from "./theme-toggle.astro";
 ---
 
-<header class="sticky top-0 container mx-auto mt-4 px-2">
+<header class="sticky top-0 z-50 container mx-auto px-2">
   <nav
-    class="bg-card text-card-foreground ring-muted flex items-center justify-between p-4 ring-1"
+    class="bg-card text-card-foreground ring-muted mt-(--navbar-margin-top) flex h-(--navbar-height) items-center justify-between p-4 ring-1"
   >
     <a href="/" class="flex items-center gap-1.5">
       <Image src={logo} alt="site logo" class="size-10 shrink-0" />
