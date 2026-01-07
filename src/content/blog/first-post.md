@@ -2,6 +2,9 @@
 title: "First post"
 description: "Lorem ipsum dolor sit amet"
 pubDate: "Jul 08 2022"
+labels:
+  - category: "full-stack"
+    tags: ["next"]
 # heroImage: '../../assets/blog-placeholder-3.jpg'
 ---
 

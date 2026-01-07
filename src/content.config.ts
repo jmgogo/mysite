@@ -1,6 +1,6 @@
 import { defineCollection, z } from "astro:content";
 
-const languages = z.enum([
+const programmingLanguage = z.enum([
   "c",
   "c#",
   "c++",
@@ -14,7 +14,7 @@ const languages = z.enum([
   "typescript",
 ]);
 
-const clientside = z.enum([
+const clientSide = z.enum([
   "3d",
   "accessibility",
   "angular",
@@ -32,7 +32,7 @@ const clientside = z.enum([
   "remix",
   "responsive-layouts",
   "seo",
-  "solidjs",
+  "solid",
   "svelte",
   "svg",
   "tailwind-css",
@@ -42,7 +42,7 @@ const clientside = z.enum([
   "zustand",
 ]);
 
-const serverside = z.enum([
+const serverSide = z.enum([
   "api",
   "deno",
   "express",
@@ -55,9 +55,9 @@ const serverside = z.enum([
   "websockets",
 ]);
 
-const databases = z.enum(["postgresql", "redis", "mongodb"]);
+const database = z.enum(["postgresql", "redis", "mongodb"]);
 
-const fullstack = z.enum(["astro", "next", "sveltkit", "tanstack"]);
+const fullStack = z.enum(["astro", "next", "sveltkit", "tanstack"]);
 
 const devops = z.enum([
   "aws",
@@ -84,21 +84,17 @@ const devops = z.enum([
   "webpack",
 ]);
 
-const general = z.enum([
+const software = z.enum([
   "algorithms",
   "architecture",
   "computer-science",
   "functional-programming",
   "frameworks",
-  "full-stack",
-  "object-oriented",
+  "object-oriented-programming",
   "performance",
-  "programming-language",
   "state-management",
   "website-generators",
 ]);
-
-const difficulty = z.enum(["beginner", "intermediate", "advanced"]);
 
 const ai = z.enum([
   "openai",
@@ -114,6 +110,47 @@ const blogTags = z.enum([""]);
 
 import { glob } from "astro/loaders";
 
+const categorySchema = z.array(
+  z.discriminatedUnion("category", [
+    z.object({
+      category: z.literal("full-stack"),
+      tags: z.array(fullStack),
+    }),
+    z.object({
+      category: z.literal("server-side"),
+      tags: z.array(serverSide),
+    }),
+    z.object({
+      category: z.literal("programming-language"),
+      tags: z.array(programmingLanguage),
+    }),
+    z.object({
+      category: z.literal("devops"),
+      tags: z.array(devops),
+    }),
+    z.object({
+      category: z.literal("database"),
+      tags: z.array(database),
+    }),
+    z.object({
+      category: z.literal("client-side"),
+      tags: z.array(clientSide),
+    }),
+    z.object({
+      category: z.literal("software"),
+      tags: z.array(software),
+    }),
+    z.object({
+      category: z.literal("career"),
+      tags: z.array(career),
+    }),
+    z.object({
+      category: z.literal("ai"),
+      tags: z.array(ai),
+    }),
+  ]),
+);
+
 const blog = defineCollection({
   // Load Markdown and MDX files in the `src/content/blog/` directory.
   loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
@@ -123,7 +160,7 @@ const blog = defineCollection({
       title: z.string(),
       description: z.string(), // synopsis of the post
       pubDate: z.coerce.date(),
-      tags: z.array(blogTags).optional(),
+      labels: categorySchema,
       updatedDate: z.coerce.date().optional(),
       coverImage: image().optional(),
       coverImageAlt: z.string().optional(),
