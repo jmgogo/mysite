@@ -1,12 +1,15 @@
 ---
-interface Props {
+import type { InferEntrySchema } from "astro:content";
+import Badge from "./badge.astro";
+
+type Blog = InferEntrySchema<"blog">;
+
+interface Props extends Blog {
+  // id for routing
   postId: string;
-  title: string;
-  description: string;
-  readingTime: string;
-  wordCount: number;
-  pubDate: Date;
-  updatedDate?: Date;
+  // remark plugin generated front-matter
+  readingTime?: string;
+  wordCount?: number;
 }
 
 const {
@@ -17,6 +20,7 @@ const {
   wordCount,
   pubDate,
   updatedDate,
+  labels,
 } = Astro.props;
 ---
 
@@ -54,10 +58,28 @@ const {
       </p>
     </div>
     <!-- Card Footer -->
-    <div class="text-muted-foreground text-sm">
-      <span>{wordCount} words</span>
-      &middot
-      <span>{readingTime}</span>
-    </div>
+    {
+      labels && labels.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {labels.map((label) => (
+            <>
+              <Badge variant={"primary"}>{label.category}</Badge>
+              {label.tags.map((tag) => (
+                <Badge variant={"outline"}>{tag}</Badge>
+              ))}
+            </>
+          ))}
+        </div>
+      )
+    }
+    {
+      wordCount && readingTime && (
+        <div class="text-muted-foreground text-sm">
+          <span>{wordCount} words</span>
+          &middot
+          <span>{readingTime}</span>
+        </div>
+      )
+    }
   </a>
 </div>
