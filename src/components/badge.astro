@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "astro/types";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-full border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
+  "inline-flex items-center justify-center rounded-full border px-2 py-0.5 text-xs font-bold w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
   {
     variants: {
       variant: {
@@ -24,9 +24,11 @@ const badgeVariants = cva(
 );
 
 export interface Props
-  extends HTMLAttributes<"span">, VariantProps<typeof badgeVariants> {}
+  extends HTMLAttributes<"span">, VariantProps<typeof badgeVariants> {
+  quantity?: number;
+}
 
-const { class: className, variant, ...rest } = Astro.props;
+const { class: className, variant, quantity, ...rest } = Astro.props;
 ---
 
 <span
@@ -35,4 +37,9 @@ const { class: className, variant, ...rest } = Astro.props;
   {...rest}
 >
   <slot />
+  {
+    quantity !== undefined && (
+      <span class="ml-1 inline-flex font-bold">{quantity}</span>
+    )
+  }
 </span>
