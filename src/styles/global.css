@@ -2,6 +2,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@keyframes rocket {
+  0%,
+  100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg) translateX(0.1rem);
+  }
+}
+
 :root {
   --navbar-height: 72px;
   --navbar-margin-top: 16px;
@@ -158,7 +168,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* Override tailwind default font namespace, i.e. font-sans, font-mono, font-serif */
-  --font-*: initial;
+  /* --font-*: initial; */
   /* Add custom font namespace */
   --font-compagnon: var(--font-compagnon);
 
@@ -178,6 +188,8 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --animate-rocket: rocket 0.3s ease-in-out infinite;
 }
 
 @layer base {

@@ -1,11 +1,50 @@
 ---
-import { getCollection } from "astro:content";
+import { formatDistance } from "date-fns";
+import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/default.astro";
 import BlogCard from "@/components/blog-card.astro";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+import type { CollectionEntry } from "astro:content";
+import Badge from "@/components/badge.astro";
+type BlogEntry = CollectionEntry<"blog">;
+
+const posts = (await Promise.all(
+  (await getCollection("blog"))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .map(async (post) => {
+      const { remarkPluginFrontmatter } = await render(post);
+      return { ...post, ...remarkPluginFrontmatter };
+    }),
+)) as (BlogEntry & {
+  readingTime: string;
+  wordCount: number;
+  minutesRead: number;
+})[];
+
+const { totalWords, totalReadingTime, categories, tags } = posts.reduce(
+  (acc, post) => {
+    acc.totalWords += post.wordCount;
+    acc.totalReadingTime += post.minutesRead;
+
+    post.data.labels.forEach(({ category, tags }) => {
+      acc.categories.set(category, (acc.categories.get(category) ?? 0) + 1);
+      tags.forEach((tag) => {
+        acc.tags.set(tag, (acc.tags.get(tag) ?? 0) + 1);
+      });
+    });
+    return acc;
+  },
+  {
+    totalWords: 0,
+    totalReadingTime: 0,
+    categories: new Map<string, number>(),
+    tags: new Map<string, number>(),
+  },
 );
+
+const timeDisplay = formatDistance(0, totalReadingTime * 60 * 1000, {
+  includeSeconds: false,
+});
 ---
 
 <Layout>
@@ -15,7 +54,47 @@ const posts = (await getCollection("blog")).sort(
     <div
       class="grid gap-4 @3xl/blog-posts:grid-cols-[3fr_minmax(225px,1fr)] @3xl/blog-posts:gap-8"
     >
-      <aside class="@3xl/blog-posts:order-last">TODO: add tags</aside>
+      <aside class="flex flex-col gap-8 @3xl/blog-posts:order-last">
+        <!-- Metrics for Written Content  -->
+        <div class="group text-muted-foreground">
+          Houston - we've writt'n <span
+            class="text-secondary font-bold text-nowrap"
+            >{totalWords} words</span
+          >, and have <span class="text-secondary font-bold">{timeDisplay}</span
+          > of content!
+          <span
+            class="motion-safe:group-hover:animate-rocket inline-block transition-transform select-none group-hover:scale-150 group-hover:rotate-25"
+            >🚀</span
+          >
+        </div>
+        <!-- Categories -->
+        <div>
+          <h2 class="mb-4 text-2xl font-bold italic">Categories</h2>
+          <div class="flex flex-wrap gap-1">
+            {
+              Array.from(categories).map(([category, count]) => (
+                <Badge variant="primary" quantity={count}>
+                  {category}
+                </Badge>
+              ))
+            }
+          </div>
+        </div>
+        <!-- Tags -->
+        <div>
+          <h2 class="mb-4 text-2xl font-bold italic">Tags</h2>
+          <div class="flex flex-wrap gap-1">
+            {
+              Array.from(tags).map(([tag, count]) => (
+                <Badge variant="outline" quantity={count}>
+                  {tag}
+                </Badge>
+              ))
+            }
+          </div>
+        </div>
+      </aside>
+      <!-- Blog Posts -->
       <section
         class="grid place-items-center items-stretch gap-4 @lg/blog-posts:grid-cols-2 @lg/blog-posts:gap-px @5xl/blog-posts:grid-cols-3"
       >
@@ -23,8 +102,8 @@ const posts = (await getCollection("blog")).sort(
           posts.map((post) => (
             <BlogCard
               postId={post.id}
-              readingTime={post.rendered?.metadata?.frontmatter?.readingTime}
-              wordCount={post.rendered?.metadata?.frontmatter?.wordCount}
+              readingTime={post.readingTime}
+              wordCount={post.wordCount}
               {...post.data}
             />
           ))
