@@ -12,16 +12,16 @@ import ThemeToggle from "./theme-toggle.astro";
   <nav
     class="bg-card text-card-foreground ring-muted mt-(--navbar-margin-top) flex h-(--navbar-height) items-center justify-between p-4 ring-1"
   >
-    <a href="/" class="flex items-center gap-1.5">
+    <a href={`${import.meta.env.BASE_URL}/`} class="flex items-center gap-1.5">
       <Image src={logo} alt="site logo" class="size-10 shrink-0" />
       <h1 class="hidden text-3xl font-bold md:block lg:text-4xl">{USERNAME}</h1>
     </a>
     <div
       class="align-center hidden gap-8 text-2xl font-bold italic md:flex lg:text-3xl"
     >
-      <NavLink href="/blog">Blog</NavLink>
-      <NavLink href="/contact">Contact</NavLink>
-      <NavLink href="/resume">Resume</NavLink>
+      <NavLink href={`${import.meta.env.BASE_URL}/blog`}>Blog</NavLink>
+      <NavLink href={`${import.meta.env.BASE_URL}/contact`}>Contact</NavLink>
+      <NavLink href={`${import.meta.env.BASE_URL}/resume`}>Resume</NavLink>
     </div>
     <div class="flex gap-3">
       <ThemeToggle>
@@ -46,9 +46,9 @@ import ThemeToggle from "./theme-toggle.astro";
     </div>
   </nav>
   <div id="off-screen-menu" class="md:hidden">
-    <NavLink href="/blog">Blog</NavLink>
-    <NavLink href="/contact">Contact</NavLink>
-    <NavLink href="/resume">Resume</NavLink>
+    <NavLink href={`${import.meta.env.BASE_URL}/blog`}>Blog</NavLink>
+    <NavLink href={`${import.meta.env.BASE_URL}/contact`}>Contact</NavLink>
+    <NavLink href={`${import.meta.env.BASE_URL}/resume`}>Resume</NavLink>
   </div>
 </header>
 
