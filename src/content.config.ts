@@ -106,8 +106,6 @@ const ai = z.enum([
 
 const career = z.enum(["interviewing", "management"]);
 
-const blogTags = z.enum([""]);
-
 import { glob } from "astro/loaders";
 
 const categorySchema = z.array(
@@ -167,8 +165,5 @@ const blog = defineCollection({
     }),
 });
 
-// TODO get type safety for wordCount and reading time
-// wordCount: z.coerce.number(), // number of words
-// readingTime: z.string(), // e.g. 3 min read
 
 export const collections = { blog };
