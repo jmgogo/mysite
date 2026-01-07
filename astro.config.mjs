@@ -8,7 +8,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://jmgogo.github.io/mysite/",
+  site: "https://jmgogo.github.io",
+  base: "/mysite/",
   integrations: [mdx(), sitemap()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
