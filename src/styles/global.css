@@ -16,6 +16,7 @@
 :root {
   --navbar-height: 72px;
   --navbar-margin-top: 16px;
+  --navbar-spacing: calc(var(--navbar-height) + var(--navbar-margin-top));
   --background: oklch(0.9824 0.0013 286.3757);
   --foreground: oklch(0.3563 0.052 181.7481);
   --card: oklch(1 0 0);

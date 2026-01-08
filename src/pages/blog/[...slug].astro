@@ -23,7 +23,10 @@ const validHeading = headings.filter(
   <div class="align-start flex flex-wrap gap-8 md:flex-nowrap">
     {
       validHeading.length > 0 && (
-        <nav class="sticky top-[calc(var(--navbar-height)+var(--navbar-margin-top)+2rem)] z-20 h-full max-w-xs shrink-0 rounded-lg p-6">
+        <nav
+          id="toc"
+          class="sticky top-(--navbar-spacing) max-h-[calc(100vh-var(--navbar-spacing))] max-w-xs shrink-0 overflow-y-hidden rounded-lg p-6 hover:overflow-y-auto"
+        >
           <small class="font-bold text-nowrap uppercase italic">
             On this page
           </small>
@@ -35,7 +38,7 @@ const validHeading = headings.filter(
                 2. FIX SPACING
                  */}
                 <a
-                  class="block scroll-mt-[calc(var(--navbar-height)+var(--navbar-margin-top)+2rem)] py-1 text-blue-600 hover:underline dark:text-blue-400"
+                  class="block py-1 text-blue-600 hover:underline dark:text-blue-400"
                   href={`#${heading.slug}`}
                 >
                   {heading.text}
@@ -58,3 +61,11 @@ const validHeading = headings.filter(
     </div>
   </div>
 </BlogLayout>
+
+<style>
+  #toc {
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-foreground) var(--color-background);
+  }
+</style>
