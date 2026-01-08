@@ -230,6 +230,8 @@
   h5,
   h6 {
     overflow-wrap: break-word;
+    /* Add scroll margin to section headers on blog */
+    scroll-margin-top: calc(var(--navbar-height) + var(--navbar-margin-top));
   }
 
   /* Improve line wrapping */
