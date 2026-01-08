@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
-import BlogPost from "../../layouts/page.astro";
+import BlogLayout from "../../layouts/page.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -12,15 +12,49 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
-const { Content, remarkPluginFrontmatter } = await render(post);
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
+
+const validHeading = headings.filter(
+  (heading) => heading.depth === 2 || heading.depth === 3,
+);
 ---
 
-<BlogPost {...post.data}>
-  <p>
-    WordCount: {remarkPluginFrontmatter.wordCount}
-  </p>
-  <p>
-    Reading Time {remarkPluginFrontmatter.readingTime}
-  </p>
-  <Content />
-</BlogPost>
+<BlogLayout {...post.data}>
+  <div class="align-start flex flex-wrap gap-8 md:flex-nowrap">
+    {
+      validHeading.length > 0 && (
+        <nav class="sticky top-[calc(var(--navbar-height)+var(--navbar-margin-top)+2rem)] z-20 h-full max-w-xs shrink-0 rounded-lg p-6">
+          <small class="font-bold text-nowrap uppercase italic">
+            On this page
+          </small>
+          <ul class="m-0">
+            {validHeading.map((heading) => (
+              <li class="m-0 list-none">
+                {/* TODO 
+                1. FIX SCROLL MARGIN
+                2. FIX SPACING
+                 */}
+                <a
+                  class="block scroll-mt-[calc(var(--navbar-height)+var(--navbar-margin-top)+2rem)] py-1 text-blue-600 hover:underline dark:text-blue-400"
+                  href={`#${heading.slug}`}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    <div class="content">
+      <p>
+        WordCount: {remarkPluginFrontmatter.wordCount}
+      </p>
+      <p>
+        Reading Time {remarkPluginFrontmatter.readingTime}
+      </p>
+      <Content />
+    </div>
+  </div>
+</BlogLayout>
