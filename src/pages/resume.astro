@@ -1,0 +1,16 @@
+---
+import PageLayout from "@/layouts/page.astro";
+import { renderTableOfContents } from "@/utils/render-toc";
+import { render } from "astro:content";
+import { getCollection } from "astro:content";
+
+const [resume] = await getCollection("resume");
+
+const { Content, headings } = await render(resume);
+
+const tableOfContents = renderTableOfContents(headings, 1);
+---
+
+<PageLayout tableOfContents={tableOfContents}>
+  <Content />
+</PageLayout>
