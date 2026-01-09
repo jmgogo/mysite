@@ -151,81 +151,87 @@ function getActivityForDate(date: Date): { count: number; posts: any[] } {
 const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 ---
 
-<div class="contribution-graph">
-  <div class="graph-container">
-    <table class="graph-table">
-      <thead>
-        <tr>
-          <th></th>
+<div class="flex">
+  <div class="contribution-graph font-sans">
+    <div class="graph-container">
+      <table class="graph-table">
+        <thead>
+          <tr>
+            <th class="row-label-spacer"></th>
+            {
+              monthHeaders.map((header) => (
+                <th colspan={header.span} class="month-header">
+                  {header.month}
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
           {
-            monthHeaders.map((header) => (
-              <th colspan={header.span} class="month-header">
-                {header.month}
-              </th>
+            [0, 1, 2, 3, 4, 5, 6].map((dayIndex) => (
+              <tr class="graph-row">
+                <td class="day-label-cell">
+                  <span class="day-label">{dayLabels[dayIndex]}</span>
+                </td>
+                {weeks.map((week) => {
+                  const date = week[dayIndex];
+                  const { count, posts: dayPosts } = getActivityForDate(date);
+                  const isCurrentYear = date.getFullYear() === year;
+                  const colorClass = isCurrentYear
+                    ? getColorClass(count)
+                    : "bg-gray-50";
+
+                  return (
+                    <td
+                      class={`graph-cell ${colorClass}`}
+                      title={
+                        isCurrentYear && count > 0
+                          ? `${date.toLocaleDateString()}: ${count} post${count > 1 ? "s" : ""} - ${dayPosts.map((p) => p.data.title).join(", ")}`
+                          : date.toLocaleDateString()
+                      }
+                      data-date={date.toISOString().split("T")[0]}
+                      data-count={count}
+                    />
+                  );
+                })}
+              </tr>
             ))
           }
-        </tr>
-      </thead>
-      <tbody>
-        {
-          [0, 1, 2, 3, 4, 5, 6].map((dayIndex) => (
-            <tr>
-              <td class="day-label">{dayLabels[dayIndex]}</td>
-              {weeks.map((week) => {
-                const date = week[dayIndex];
-                const { count, posts: dayPosts } = getActivityForDate(date);
-                const isCurrentYear = date.getFullYear() === year;
-                const colorClass = isCurrentYear
-                  ? getColorClass(count)
-                  : "bg-gray-50";
-
-                return (
-                  <td
-                    class={`graph-cell ${colorClass}`}
-                    title={
-                      isCurrentYear && count > 0
-                        ? `${date.toLocaleDateString()}: ${count} post${count > 1 ? "s" : ""} - ${dayPosts.map((p) => p.data.title).join(", ")}`
-                        : date.toLocaleDateString()
-                    }
-                    data-date={date.toISOString().split("T")[0]}
-                    data-count={count}
-                  />
-                );
-              })}
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
-  </div>
-
-  <div class="legend">
-    <span class="legend-label">Less</span>
-    <div class="legend-cell bg-gray-100"></div>
-    <div class="legend-cell bg-green-200"></div>
-    <div class="legend-cell bg-green-400"></div>
-    <div class="legend-cell bg-green-600"></div>
-    <div class="legend-cell bg-green-800"></div>
-    <span class="legend-label">More</span>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex flex-wrap justify-between gap-x-4">
+      <h3 class="inline-block font-bold italic">Blog Activity</h3>
+      <div class="legend">
+        <span class="legend-label">Less</span>
+        <div class="legend-cell bg-gray-100"></div>
+        <div class="legend-cell bg-green-200"></div>
+        <div class="legend-cell bg-green-400"></div>
+        <div class="legend-cell bg-green-600"></div>
+        <div class="legend-cell bg-green-800"></div>
+        <span class="legend-label">More</span>
+      </div>
+    </div>
   </div>
 </div>
 
 <style>
   .contribution-graph {
-    font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-      sans-serif;
-    padding: 1rem;
+    overflow-x: auto;
+    margin-inline: 1rem;
   }
 
   .graph-container {
-    overflow-x: auto;
-    margin-bottom: 0.75rem;
+    position: relative;
+    padding-bottom: 0.5rem;
   }
 
   .graph-table {
     border-collapse: separate;
     border-spacing: 2px;
+    /* Prevent table from shrinking */
+    table-layout: fixed;
   }
 
   .month-header {
@@ -236,20 +242,45 @@ const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     padding-bottom: 0.25rem;
   }
 
-  .day-label {
-    font-size: 0.625rem;
-    color: #57606a;
-    padding-right: 0.5rem;
-    text-align: right;
-    vertical-align: middle;
+  /* Added spacer cell for row labels in header */
+  .row-label-spacer {
+    min-width: 30px;
   }
 
-  .graph-cell {
-    width: 15px;
+  /* Position row relatively to contain absolute positioned label */
+  .graph-row {
     height: 10px;
+    position: relative;
+  }
+
+  /* Day label cell with fixed width to prevent shrinking */
+  .day-label-cell {
+    width: 30px;
+    min-width: 30px;
+    height: 10px;
+    padding: 0;
+    position: relative;
+  }
+
+  /* Absolutely positioned day label to avoid affecting row height */
+  .day-label {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.625rem;
+    color: #57606a;
+    white-space: nowrap;
+  }
+
+  /* Fixed cell dimensions to prevent shrinking */
+  .graph-cell {
+    min-width: 10px;
+    min-height: 10px;
     border-radius: 2px;
     cursor: pointer;
     transition: all 0.1s ease;
+    padding: 0;
   }
 
   .graph-cell:hover {
@@ -273,29 +304,5 @@ const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     width: 10px;
     height: 10px;
     border-radius: 2px;
-  }
-
-  .bg-gray-50 {
-    background-color: #f6f8fa;
-  }
-
-  .bg-gray-100 {
-    background-color: #ebedf0;
-  }
-
-  .bg-green-200 {
-    background-color: #9be9a8;
-  }
-
-  .bg-green-400 {
-    background-color: #40c463;
-  }
-
-  .bg-green-600 {
-    background-color: #30a14e;
-  }
-
-  .bg-green-800 {
-    background-color: #216e39;
   }
 </style>
