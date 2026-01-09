@@ -3,10 +3,14 @@ import { formatDistance } from "date-fns";
 import { getCollection, render } from "astro:content";
 import Layout from "../../layouts/default.astro";
 import BlogCard from "@/components/blog-card.astro";
+import Badge from "@/components/badge.astro";
+import ActivityGraph from "../../components/activity-graph.astro";
 
 import type { CollectionEntry } from "astro:content";
-import Badge from "@/components/badge.astro";
 type BlogEntry = CollectionEntry<"blog">;
+
+// You can also filter by year if needed
+const currentYear = new Date().getFullYear();
 
 const posts = (await Promise.all(
   (await getCollection("blog"))
@@ -95,20 +99,25 @@ const timeDisplay = formatDistance(0, totalReadingTime * 60 * 1000, {
         </div>
       </aside>
       <!-- Blog Posts -->
-      <section
-        class="grid place-items-center items-stretch gap-4 @lg/blog-posts:grid-cols-2 @lg/blog-posts:gap-px @5xl/blog-posts:grid-cols-3"
-      >
-        {
-          posts.map((post) => (
-            <BlogCard
-              postId={post.id}
-              readingTime={post.readingTime}
-              wordCount={post.wordCount}
-              {...post.data}
-            />
-          ))
-        }
-      </section>
+      <div>
+        <section
+          class="grid place-items-center items-stretch gap-4 @lg/blog-posts:grid-cols-2 @lg/blog-posts:gap-px @5xl/blog-posts:grid-cols-3"
+        >
+          {
+            posts.map((post) => (
+              <BlogCard
+                postId={post.id}
+                readingTime={post.readingTime}
+                wordCount={post.wordCount}
+                {...post.data}
+              />
+            ))
+          }
+        </section>
+        <div class="mt-8 hidden md:block">
+          <ActivityGraph posts={posts} year={currentYear} />
+        </div>
+      </div>
     </div>
   </div>
 </Layout>
