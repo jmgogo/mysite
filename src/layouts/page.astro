@@ -31,3 +31,11 @@ const { tableOfContents, renderTableOfContents = true } = Astro.props;
     </Prose>
   </div>
 </DefaultLayout>
+
+<style>
+  #toc {
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-foreground) var(--color-background);
+  }
+</style>
