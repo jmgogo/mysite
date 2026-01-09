@@ -4,29 +4,29 @@ import Layout from "../layouts/default.astro";
 
 <Layout>
   <div
-    class="@container/hero relative grid h-full min-h-[calc(100vh-var(--navbar-spacing))] place-items-center"
+    class="font-compagnon @container/hero relative grid h-full min-h-[calc(100vh-var(--navbar-spacing))] place-items-center"
   >
     <div
       class="flex flex-col items-center gap-4 text-center md:gap-6 lg:gap-12"
     >
-      <h1
+      <div
         class="flex grow flex-wrap items-center text-4xl font-bold italic @sm/hero:text-6xl @lg/hero:text-7xl @2xl/hero:text-8xl @3xl/hero:text-9xl @4xl/hero:text-[10rem]"
       >
         <span>jose</span>
         <span class="text-secondary">gomez</span>
-      </h1>
+      </div>
       <div
-        class="text-secondary text-xs font-normal tracking-wide @sm/hero:text-base @lg/hero:text-lg @2xl/hero:text-xl @4xl/hero:text-2xl"
+        class="text-secondary text-xs @sm/hero:text-base @lg/hero:text-lg @2xl/hero:text-xl @4xl/hero:text-2xl"
       >
-        <p>
+        <div class="font-compagnon font-bold tracking-widest">
           <span class="text-nowrap">{"< Full Stack "}</span>
           <span class="text-nowrap">{"Software Engineer />"}</span>
-        </p>
-        <p
-          class="text-foreground text-xs italic @sm/hero:text-base @lg/hero:text-lg @2xl/hero:text-xl @4xl/hero:text-2xl"
+        </div>
+        <div
+          class="text-foreground text-xs @sm/hero:text-base @lg/hero:text-lg @2xl/hero:text-xl @4xl/hero:text-2xl"
         >
-          Welcome to my little corner of the internet.
-        </p>
+          Welcome to my little corner on the internet.
+        </div>
       </div>
     </div>
   </div>
