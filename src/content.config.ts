@@ -165,5 +165,12 @@ const blog = defineCollection({
     }),
 });
 
+const resume = defineCollection({
+  loader: glob({ base: "./src/content/resume", pattern: "**/*.{md,mdx}" }),
+  schema: z.object({
+      title: z.string(),
+    })
+})
 
-export const collections = { blog };
+
+export const collections = { blog, resume };

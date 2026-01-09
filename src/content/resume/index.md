@@ -1,6 +1,5 @@
 ---
 title: "Jose's Resume"
-# layout: "../layouts/page.astro"
 ---
 
 # Professional Summary
