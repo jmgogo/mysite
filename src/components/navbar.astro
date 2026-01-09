@@ -8,13 +8,15 @@ import NavLink from "./nav-link.astro";
 import ThemeToggle from "./theme-toggle.astro";
 ---
 
-<header class="sticky top-0 z-50 container mx-auto px-2">
+<header class="font-compagnon sticky top-0 z-50 container mx-auto px-2">
   <nav
-    class="bg-card text-card-foreground ring-muted mt-(--navbar-margin-top) flex h-(--navbar-height) items-center justify-between p-4 ring-1"
+    class="bg-card text-card-foreground ring-muted mt-(--navbar-margin-top) flex h-(--navbar-height) items-center justify-between p-4 leading-none ring-1"
   >
     <a href={`${import.meta.env.BASE_URL}/`} class="flex items-center gap-1.5">
       <Image src={logo} alt="site logo" class="size-10 shrink-0" />
-      <h1 class="hidden text-3xl font-bold md:block lg:text-4xl">{USERNAME}</h1>
+      <div class="hidden text-3xl font-bold md:block lg:text-4xl">
+        {USERNAME}
+      </div>
     </a>
     <div
       class="align-center hidden gap-8 text-2xl font-bold italic md:flex lg:text-3xl"
@@ -24,19 +26,25 @@ import ThemeToggle from "./theme-toggle.astro";
       <!-- <NavLink href={`${import.meta.env.BASE_URL}/contact`}>Contact</NavLink> -->
       <NavLink href={`${import.meta.env.BASE_URL}/resume`}>Resume</NavLink>
     </div>
-    <div class="flex gap-3">
-      <ThemeToggle>
-        <span class="sr-only">Toggle light/dark mode</span>
-      </ThemeToggle>
-      <a href="https://github.com/jmgogo" target="_blank">
-        <span class="sr-only">Checkout my GitHub profile</span>
-        <GitHub class="size-8" />
-      </a>
-      <a href="">
-        <span class="sr-only">Subscribe to my RSS Feed</span>
-        <RSS class="size-8" />
-      </a>
-    </div>
+    <ul class="flex gap-3">
+      <li>
+        <ThemeToggle>
+          <span class="sr-only">Toggle light/dark mode</span>
+        </ThemeToggle>
+      </li>
+      <li>
+        <a href="https://github.com/jmgogo" target="_blank">
+          <span class="sr-only">Checkout my GitHub profile</span>
+          <GitHub class="size-8" />
+        </a>
+      </li>
+      <li>
+        <a href="">
+          <span class="sr-only">Subscribe to my RSS Feed</span>
+          <RSS class="size-8" />
+        </a>
+      </li>
+    </ul>
     <div class="md:hidden">
       <div id="ham-menu">
         <span></span>
@@ -46,7 +54,7 @@ import ThemeToggle from "./theme-toggle.astro";
       <span class="sr-only">Toggle mobile menu</span>
     </div>
   </nav>
-  <div id="off-screen-menu" class="md:hidden">
+  <div id="off-screen-menu" class="font-bold md:hidden">
     <NavLink href={`${import.meta.env.BASE_URL}/blog`}>Blog</NavLink>
     <!-- TODO: add contact page -->
     <!-- <NavLink href={`${import.meta.env.BASE_URL}/contact`}>Contact</NavLink> -->
