@@ -16,7 +16,7 @@ const { tableOfContents, renderTableOfContents = true } = Astro.props;
       renderTableOfContents && (
         <nav
           id="toc"
-          class="sticky top-(--navbar-spacing) mt-8 max-h-[calc(100vh-var(--navbar-spacing))] max-w-xs shrink-0 overflow-y-hidden rounded-lg px-4 hover:overflow-y-auto"
+          class="top-(--navbar-spacing) mt-8 max-h-[calc(100vh-var(--navbar-spacing))] max-w-xs shrink-0 overflow-y-hidden rounded-lg px-4 hover:overflow-y-auto md:sticky"
         >
           <h2 class="mb-2 inline-block border-b font-bold text-nowrap">
             Table of Contents
