@@ -1,7 +1,7 @@
 ---
 title: "Third post"
 description: "Tempus quam pellentesque nec nam aliquam sem."
-pubDate: "Jul 22 2022"
+pubDate: "2026-02-09"
 # heroImage: '../../assets/blog-placeholder-2.jpg'
 labels:
   - category: "full-stack"

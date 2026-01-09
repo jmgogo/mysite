@@ -1,7 +1,7 @@
 ---
 title: "Second post"
 description: "Morbi tristique senectus et netus."
-pubDate: "Jul 15 2022"
+pubDate: "2026-01-01"
 labels:
   - category: "full-stack"
     tags: ["next"]

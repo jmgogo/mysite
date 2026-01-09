@@ -1,7 +1,7 @@
 ---
 title: "First post"
 description: "Lorem ipsum dolor sit amet"
-pubDate: "Jul 08 2022"
+pubDate: "2026-08-01"
 labels:
   - category: "full-stack"
     tags: ["next"]
