@@ -1,7 +1,8 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
 import BlogLayout from "../../layouts/page.astro";
-
+import { renderTableOfContents } from "@/utils/render-toc";
+import Badge from "@/components/badge.astro";
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
@@ -14,58 +15,23 @@ type Props = CollectionEntry<"blog">;
 const post = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await render(post);
 
-const validHeading = headings.filter(
+const validHeadings = headings.filter(
   (heading) => heading.depth === 2 || heading.depth === 3,
 );
+
+const tableOfContents = renderTableOfContents(validHeadings, 2);
 ---
 
-<BlogLayout {...post.data}>
-  <div class="align-start flex flex-wrap gap-8 md:flex-nowrap">
-    {
-      validHeading.length > 0 && (
-        <nav
-          id="toc"
-          class="sticky top-(--navbar-spacing) max-h-[calc(100vh-var(--navbar-spacing))] max-w-xs shrink-0 overflow-y-hidden rounded-lg p-6 hover:overflow-y-auto"
-        >
-          <small class="font-bold text-nowrap uppercase italic">
-            On this page
-          </small>
-          <ul class="m-0">
-            {validHeading.map((heading) => (
-              <li class="m-0 list-none">
-                {/* TODO 
-                1. FIX SCROLL MARGIN
-                2. FIX SPACING
-                 */}
-                <a
-                  class="block py-1 text-blue-600 hover:underline dark:text-blue-400"
-                  href={`#${heading.slug}`}
-                >
-                  {heading.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )
-    }
-
-    <div class="content">
-      <p>
-        WordCount: {remarkPluginFrontmatter.wordCount}
-      </p>
-      <p>
-        Reading Time {remarkPluginFrontmatter.readingTime}
-      </p>
-      <Content />
-    </div>
+<BlogLayout
+  renderTableOfContents={validHeadings.length > 0}
+  tableOfContents={tableOfContents}
+>
+  <div class="font-compagnon flex flex-wrap gap-2 font-bold">
+    WordCount: <Badge>
+      {remarkPluginFrontmatter.wordCount}
+    </Badge> | Reading Time: <Badge variant={"secondary"}>
+      {remarkPluginFrontmatter.readingTime}
+    </Badge>
   </div>
+  <Content />
 </BlogLayout>
-
-<style>
-  #toc {
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-foreground) var(--color-background);
-  }
-</style>
