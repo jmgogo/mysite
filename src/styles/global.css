@@ -194,31 +194,27 @@
   --animate-rocket: rocket 0.3s ease-in-out infinite;
 }
 
+html {
+  /* Prevent layout shift when adding/removing scrollbars */
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-foreground) var(--color-background);
+}
+
 @layer base {
-  html {
-    /* Prevent layout shift when adding/removing scrollbars */
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-foreground) var(--color-background);
-  }
-
   body {
-    /* Set default text properties */
-    letter-spacing: var(--tracking-normal);
-
-    /* Improve text rendering on macOS browsers */
-    -webkit-font-smoothing: antialiased;
+    @apply bg-background text-foreground font-sans tracking-normal text-pretty antialiased;
   }
 
   /* Set default element font sizes */
   h1 {
-    font-size: var(--text-2xl);
+    @apply text-3xl;
   }
   h2 {
-    font-size: var(--text-xl);
+    @apply text-2xl;
   }
   h3 {
-    font-size: var(--text-lg);
+    @apply text-xl;
   }
 
   /* Avoid text overflows */
@@ -229,22 +225,22 @@
   h4,
   h5,
   h6 {
-    overflow-wrap: break-word;
+    @apply wrap-break-word;
     /* Add scroll margin to section headers on blog */
     scroll-margin-top: calc(var(--navbar-height) + var(--navbar-margin-top));
   }
 
-  /* Improve line wrapping */
   p {
-    text-wrap: pretty;
+    @apply font-sans;
   }
+
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    text-wrap: balance;
+    @apply font-compagnon text-balance;
   }
 
   /* Inherit fonts for form controls */
